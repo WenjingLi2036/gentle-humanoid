@@ -6,7 +6,7 @@
 
 [![Home Page](https://img.shields.io/badge/Project-Website-C27185.svg)](https://gentle-humanoid.axell.top/#/) 
 [![arXiv](https://img.shields.io/badge/Arxiv-XX-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/XX) 
-[![Video](https://img.shields.io/badge/Vide through spring-based dynamicso-Demo-FF0000.svg?logo=youtube)](https://www.youtube.com/watch?v=t7IEsgEdoUI)
+[![Video](https://img.shields.io/badge/Vide-Demo-FF0000.svg?logo=youtube)](https://www.youtube.com/watch?v=t7IEsgEdoUI)
 [![Online Demo](https://img.shields.io/badge/Online-Demo-3B82F6.svg?logo=demo)](https://gentle-humanoid.axell.top/#/demo)
 
 This is an official implementation of GentleHumanoid, more details please check our [Project](https://gentle-humanoid.axell.top) page. 
@@ -14,7 +14,7 @@ This is an official implementation of GentleHumanoid, more details please check 
 **GentleHumanoid** learns a universal whole-body motion control policy with upper-body compliance and adjustable force limits, allowing smooth, stable, and safe interactions with humans and objects.
 
 **Key Features**:
-1. Compliance: Coordinated responses across the shoulder, elbow, and wrist for natural, adaptive motion.  
+1. Compliance: Coordinated responses across the shoulder, elbow, and wrist for adaptive motion.  
 2. Unified interaction modeling: Handles both resistive and human-guided contact forces.  
 3. Safety-aware control: Supports tunable force thresholds to ensure safe human–robot interaction.  
 4. Universal and Robust: Demonstrated in simulation and on the Unitree G1, generalizing across diverse motions and interactions.  
@@ -25,10 +25,10 @@ https://github.com/user-attachments/assets/60412d44-9c35-4934-ac14-2a906f16c37c
 
 ## TODO
 - [x] Release sim2sim, sim2real code 
-- [x] Release pretrained model 
+- [x] Release pretrained model, that can run with customized motions
 - [ ] Release training code and data
-- [ ] Release full pipeline for rgb video to G1
-- [ ] Release locomotion + motion tracking switching
+- [ ] Release full pipeline from RGB video to G1 deployment
+- [ ] Release locomotion and motion-tracking switching module
 - [ ] More upon request
 
 ## Getting Started 
