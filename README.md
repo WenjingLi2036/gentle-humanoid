@@ -6,7 +6,7 @@
 
 [![Home Page](https://img.shields.io/badge/Project-Website-C27185.svg)](https://gentle-humanoid.axell.top/#/) 
 [![arXiv](https://img.shields.io/badge/Arxiv-XX-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/XX) 
-[![Video](https://img.shields.io/badge/Vide-Demo-FF0000.svg?logo=youtube)](https://www.youtube.com/watch?v=t7IEsgEdoUI)
+[![Video](https://img.shields.io/badge/Vide-Demo-FF0000.svg?logo=youtube)](https://www.youtube.com/watch?v=rF6N2o0IQJg)
 [![Online Demo](https://img.shields.io/badge/Online-Demo-3B82F6.svg?logo=demo)](https://gentle-humanoid.axell.top/#/demo)
 
 This is an official implementation of GentleHumanoid, more details please check our [Project](https://gentle-humanoid.axell.top) page. 
@@ -25,7 +25,7 @@ https://github.com/user-attachments/assets/60412d44-9c35-4934-ac14-2a906f16c37c
 
 ## TODO
 - [x] Release sim2sim, sim2real code 
-- [x] Release pretrained model, that can run with customized motions
+- [x] Release pretrained model, that can deploy customized motions to G1
 - [ ] Release training code and data
 - [ ] Release full pipeline from RGB video to G1 deployment
 - [ ] Release locomotion and motion-tracking switching module
@@ -107,7 +107,14 @@ https://github.com/user-attachments/assets/19c929eb-9731-4734-b021-d22356a839c9
 
 https://github.com/user-attachments/assets/25c3596e-5b79-45cd-a4fd-3974b314e01d
 
-## Acknowledge 
-  **[TODO: add reference code]**
+## Acknowledgments
 
-## LICENSE
+- Visualization is built upon [MuJoCo](https://mujoco.org/) and [MUJOCO WASM](https://github.com/zalo/mujoco_wasm
+).  
+- RL framework from [active-adaptation](https://github.com/btx0424/active-adaptation). 
+- Sim2Real implementation is based on [Stanford-TML/real_g1](https://github.com/Stanford-TML/real_g1).  
+- Motion retargeting uses [GMR](https://github.com/YanjieZe/GMR).  
+- SMPL-X motion estimation from video uses [PromptHMR](https://github.com/yufu-wang/PromptHMR).  
+- Training datasets include [AMASS](https://amass.is.tue.mpg.de/), [InterX](https://liangxuy.github.io/inter-x/), and [LAFAN](https://github.com/ubisoft/ubisoft-laforge-animation-dataset).  
+
+<!-- ## LICENSE -->
