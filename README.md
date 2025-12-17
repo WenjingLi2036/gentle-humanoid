@@ -1,8 +1,4 @@
-
-<h2 align="center">
-  <!-- <img src="docs/gentle_humanoid_logo.png" height="24" style="vertical-align: bottom; margin-right: 0px;" /> -->
-  <a href="https://gentle-humanoid.axell.top">GentleHumanoid: Learning Upper-body Compliance for Contact-rich Human and Object Interaction</a>
-</h2>
+# GentleHumanoid: Whole body Motion Tracking with Compliance - Inference and Deploy
 
 [![Home Page](https://img.shields.io/badge/Project-Website-C27185.svg)](https://gentle-humanoid.axell.top/#/) 
 [![arXiv](https://img.shields.io/badge/Arxiv-2511.04679-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2511.04679) 
@@ -10,6 +6,8 @@
 [![Online Demo](https://img.shields.io/badge/Online-Demo-3B82F6.svg?logo=demo)](https://gentle-humanoid.axell.top/#/demo)
 
 This is an official implementation of GentleHumanoid, more details please check our [Project](https://gentle-humanoid.axell.top) page. 
+
+This repo provides the codebase for deploying GentleHumanoid policies on both simulation and real robots. For training code and data, please check [here](https://github.com/Axellwppr/gentle-humanoid-training).
 
 **GentleHumanoid** learns a universal whole-body motion control policy with upper-body compliance and adjustable force limits, allowing smooth, stable, and safe interactions with humans and objects.
 
@@ -26,7 +24,7 @@ https://github.com/user-attachments/assets/60412d44-9c35-4934-ac14-2a906f16c37c
 ## TODO
 - [x] Release sim2sim, sim2real code 
 - [x] Release pretrained model, that can deploy customized motions to G1
-- [ ] Release training code and data
+- [x] Release training code and data
 - [ ] Release full pipeline from RGB video to G1 deployment
 - [ ] Release locomotion and motion-tracking switching module
 - [ ] More upon request
