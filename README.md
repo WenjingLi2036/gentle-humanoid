@@ -82,7 +82,7 @@ Please read [official document](https://support.unitree.com/home/en/G1_developer
    ```
 3. The state machine matches Sim2Sim but with `physical remote controller` input
    - Zero torque
-   - (Press `S`) → move to default pose
+   - (Press `start`) → move to default pose
    - Place robot on the ground
    - (Press `A`) → run the active policy
    - See [Motion Switching](#motion-switching) to replay different motions.
