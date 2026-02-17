@@ -9,3 +9,6 @@ assets/visuals/*
 assets/plot/*
 assets/*.npy
 assets/ckpts_old/*
+
+eval_data/
+*.csv

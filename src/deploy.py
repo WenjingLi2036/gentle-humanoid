@@ -109,6 +109,13 @@ class Controller:
         self.btn_rise = None
         self.btn_fall = None
 
+        # initialize data logging buffer
+        # slice: [time_stamp, joint_pos, joint_vel, quat, gyro, joint target]
+        # TODO: [robot_base_pos, robot_heading] (will be included after VICON integration)
+        # TODO: [observation] .aka policy_input
+        self.slice_size = 1 + 29 + 29 + 4 + 3 +  29
+        self.data_logging_list = np.zeros((2000, self.slice_size), dtype=np.float32)
+
     def count_loop_rate(self, loop_count):
         count_loop_timer = Timer(1.0)
         while self.is_alive:
@@ -250,16 +257,30 @@ class Controller:
             self.low_cmd.motor_cmd[i].kd = float(self.kds_real[i])
             self.low_cmd.motor_cmd[i].tau = 0.0
 
+    # slice: [time_stamp, joint_pos, joint_vel, quat, gyro, joint target]
+    def save_state(self):
+        time_stamp = self.control_seconds
+        joint_pos = self.qj_real
+        joint_vel = self.dqj_real
+        quat = self.quat
+        gyro = self.gyro
+        joint_target = np.array([self.low_cmd.motor_cmd[i].q for i in range(self.dof_size_real)], dtype=np.float32)
+
+        info_slice = np.concatenate(([time_stamp], joint_pos, joint_vel, quat, gyro, joint_target))
+        self.data_logging_list = np.roll(self.data_logging_list, shift=-1, axis=0)
+        self.data_logging_list[-1, :] = info_slice        
+
+
     def run(self):
         print("Running high level...")
         self.p_loop_rate.start()
         timer = Timer(self.control_dt)
         loop_count = self.loop_count
+        time_start = time.time()
 
         try:
             while True:
                 self.process_state()
-
                 if self.btn_rise[KeyMap.select] == 1:
                     break
 
@@ -271,8 +292,13 @@ class Controller:
                 loop_count.value += 1
                 self.policy_step += 1
                 timer.sleep()
+                
+                self.control_seconds = time.time() - time_start
+                self.save_state()
+
+
         finally:
-            pass
+            np.savetxt("eval_data/unitree_g1_data_log.csv", self.data_logging_list, delimiter=",")
 
     def close(self):
         print("Closing...")
