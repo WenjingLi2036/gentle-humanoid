@@ -110,10 +110,10 @@ class Controller:
         self.btn_fall = None
 
         # initialize data logging buffer
-        # slice: [time_stamp, joint_pos, joint_vel, quat, gyro, joint target]
+        # slice: [time_stamp, joint_pos, joint_vel, quat, gyro, motor_torque, joint target]
         # TODO: [robot_base_pos, robot_heading] (will be included after VICON integration)
         # TODO: [observation] .aka policy_input
-        self.slice_size = 1 + 29 + 29 + 4 + 3 +  29
+        self.slice_size = 1 + 29 + 29 + 4 + 3 + 29 + 29
         self.data_logging_list = np.zeros((2000, self.slice_size), dtype=np.float32)
 
     def count_loop_rate(self, loop_count):
@@ -257,16 +257,17 @@ class Controller:
             self.low_cmd.motor_cmd[i].kd = float(self.kds_real[i])
             self.low_cmd.motor_cmd[i].tau = 0.0
 
-    # slice: [time_stamp, joint_pos, joint_vel, quat, gyro, joint target]
+    # slice: [time_stamp, joint_pos, joint_vel, quat, gyro, motor_torque, joint target]
     def save_state(self):
         time_stamp = self.control_seconds
         joint_pos = self.qj_real
         joint_vel = self.dqj_real
+        motor_torque = self.tau_real
         quat = self.quat
         gyro = self.gyro
         joint_target = np.array([self.low_cmd.motor_cmd[i].q for i in range(self.dof_size_real)], dtype=np.float32)
 
-        info_slice = np.concatenate(([time_stamp], joint_pos, joint_vel, quat, gyro, joint_target))
+        info_slice = np.concatenate(([time_stamp], joint_pos, joint_vel, quat, gyro, motor_torque, joint_target))
         self.data_logging_list = np.roll(self.data_logging_list, shift=-1, axis=0)
         self.data_logging_list[-1, :] = info_slice        
 
@@ -298,7 +299,21 @@ class Controller:
 
 
         finally:
-            np.savetxt("eval_data/unitree_g1_data_log.csv", self.data_logging_list, delimiter=",")
+            # Create header row with labels at the start of each data block
+            header = ["Time(s)"]
+            header += ["joint_pos"] + [""] * 28      # 29 columns
+            header += ["joint_vel"] + [""] * 28      # 29 columns
+            header += ["quat"] + [""] * 3            # 4 columns
+            header += ["gyro"] + [""] * 2            # 3 columns
+            header += ["motor_torque"] + [""] * 28   # 29 columns
+            header += ["joint_target"] + [""] * 28   # 29 columns
+
+            # Save with header
+            import os
+            os.makedirs("eval_data", exist_ok=True)
+            with open("eval_data/unitree_g1_data_log.csv", "w") as f:
+                f.write(",".join(header) + "\n")
+                np.savetxt(f, self.data_logging_list, delimiter=",")
 
     def close(self):
         print("Closing...")
