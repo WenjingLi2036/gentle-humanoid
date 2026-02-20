@@ -114,7 +114,7 @@ class Controller:
         # TODO: [robot_base_pos, robot_heading] (will be included after VICON integration)
         # TODO: [observation] .aka policy_input
         self.slice_size = 1 + 29 + 29 + 4 + 3 + 29 + 29
-        self.data_logging_list = np.zeros((2000, self.slice_size), dtype=np.float32)
+        self.data_logging_list = np.zeros((20000, self.slice_size), dtype=np.float32)
 
     def count_loop_rate(self, loop_count):
         count_loop_timer = Timer(1.0)
@@ -296,27 +296,28 @@ class Controller:
                 
                 self.control_seconds = time.time() - time_start
                 self.save_state()
-
-
         finally:
-            # Create header row with labels at the start of each data block
-            header = ["Time(s)"]
-            header += ["joint_pos"] + [""] * 28      # 29 columns
-            header += ["joint_vel"] + [""] * 28      # 29 columns
-            header += ["quat"] + [""] * 3            # 4 columns
-            header += ["gyro"] + [""] * 2            # 3 columns
-            header += ["motor_torque"] + [""] * 28   # 29 columns
-            header += ["joint_target"] + [""] * 28   # 29 columns
-
-            # Save with header
-            import os
-            os.makedirs("eval_data", exist_ok=True)
-            with open("eval_data/unitree_g1_data_log.csv", "w") as f:
-                f.write(",".join(header) + "\n")
-                np.savetxt(f, self.data_logging_list, delimiter=",")
+            pass
 
     def close(self):
         print("Closing...")
+        
+        # Create header row with labels at the start of each data block
+        header = ["Time(s)"]
+        header += ["joint_pos"] + [""] * 28      # 29 columns
+        header += ["joint_vel"] + [""] * 28      # 29 columns
+        header += ["quat"] + [""] * 3            # 4 columns
+        header += ["gyro"] + [""] * 2            # 3 columns
+        header += ["motor_torque"] + [""] * 28   # 29 columns
+        header += ["joint_target"] + [""] * 28   # 29 columns
+
+        # Save with header
+        import os
+        os.makedirs("eval_data", exist_ok=True)
+        with open("eval_data/unitree_g1_data_log.csv", "w") as f:
+            f.write(",".join(header) + "\n")
+            np.savetxt(f, self.data_logging_list, delimiter=",")
+            
         self.is_alive = False
         if self.p_loop_rate is not None and self.p_loop_rate.is_alive():
             self.p_loop_rate.terminate()
