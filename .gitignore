@@ -12,3 +12,6 @@ assets/ckpts_old/*
 
 eval_data/
 *.csv
+
+notebooks/analysis_output/
+
